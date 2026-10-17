@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuis Bunpo 2 - Interaktif (Sorted)</title>
+    <title>Kuis Bunpo 2 - Interaktif</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -115,12 +115,6 @@
         }
         .speaker-a { color: #1a5276; font-weight: 600; }
         .speaker-b { color: #1e8449; font-weight: 600; }
-        .question-label {
-            color: #c0392b;
-            font-weight: 700;
-            margin-top: 10px;
-            display: block;
-        }
         .options { display: flex; flex-direction: column; gap: 12px; }
         .option {
             display: flex;
@@ -223,7 +217,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>📝 文法 (ぶんぽう) テスト 2</h1>
+    <h1>📝 文法テスト 2</h1>
 
     <div id="startScreen">
         <label for="nama">Nama Lengkap</label>
@@ -235,7 +229,7 @@
 
     <div id="quizScreen">
         <div class="top-bar">
-            <span class="badge" id="questionCounter">Soal 1 / 74</span>
+            <span class="badge" id="questionCounter">Soal 1 / 73</span>
             <span class="timer" id="timerDisplay">⏱ 45:00</span>
         </div>
         <div class="progress-bar">
@@ -262,20 +256,20 @@
 </div>
 
 <script>
-// ==================== DATA SOAL (SORTED & FIXED) ====================
+// ==================== DATA SOAL ====================
 const questionsData = [
     {
-        q: `<span class="speaker-a">A：</span>この町(まち)には便利(べんり)ですね。\n<span class="speaker-b">B：</span>そうですね、いいところがありますか?\n<span class="speaker-a">A：</span>たくさんありますよ。＿＿＿＿＿、帰(かえ)るまでに、いろいろなところに行(い)ってみてください。`,
+        q: `<span class="speaker-a">A：</span>この町には便利ですね。\n<span class="speaker-b">B：</span>そうですね、いいところがありますか?\n<span class="speaker-a">A：</span>たくさんありますよ。＿＿＿＿＿、帰るまでに、いろいろなところに行ってみてください。`,
         options: ["できれば", "だったら", "だけど"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>じしんがあったとき、どうしますか?\n<span class="speaker-b">B：</span>机(つくえ)の上(うえ)に＿＿＿＿＿。`,
+        q: `<span class="speaker-a">A：</span>じしんがあったとき、どうしますか?\n<span class="speaker-b">B：</span>机の下に＿＿＿＿＿。`,
         options: ["ちかづく", "かくれる", "はなれる"],
-        correct: 2
+        correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>いらっしゃいませ、何(なに)がほしいですか?\n<span class="speaker-b">B：</span>バナナ、ふたふくろ＿＿＿＿＿。`,
+        q: `<span class="speaker-a">A：</span>いらっしゃいませ、何がほしいですか?\n<span class="speaker-b">B：</span>バナナ、ふたふくろ＿＿＿＿＿。`,
         options: ["ください", "よろしく", "どうぞ"],
         correct: 0
     },
@@ -285,77 +279,77 @@ const questionsData = [
         correct: 2
     },
     {
-        q: `それではこちらのフォームにごきにゅうをお願(ねが)いします。はい、＿＿＿＿＿。`,
+        q: `それではこちらのフォームにごきにゅうをお願いします。はい、＿＿＿＿＿。`,
         options: ["これでいいですか?", "どうしてますか?", "しってますか?"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>外国(がいこく)の方(かた)のために、いろいろなサービスがありますよ。\n<span class="speaker-b">B：</span>へえ、そうですか? ＿＿＿＿＿。`,
-        options: ["いやになります", "たすかります", "大切(たいせつ)にします"],
+        q: `<span class="speaker-a">A：</span>外国の方のために、いろいろなサービスがありますよ。\n<span class="speaker-b">B：</span>へえ、そうですか? ＿＿＿＿＿。`,
+        options: ["いやになります", "たすかります", "大切にします"],
         correct: 1
     },
     {
-        q: `すみません、お風呂(ふろ)にシャンプーは＿＿＿＿＿。\nはい、ご自由(じゆう)にお使(つか)いください。`,
-        options: ["ちょっといいですか?", "ついていますか?", "お持(も)ちますか?"],
+        q: `すみません、お風呂にシャンプーは＿＿＿＿＿。\nはい、ご自由にお使いください。`,
+        options: ["ちょっといいですか?", "ついていますか?", "お持ちますか?"],
         correct: 1
     },
     {
-        q: `彼(かれ)はこの町(まち)の中(なか)で一番(いちばん)＿＿＿＿＿人(ひと)です。`,
-        options: ["有名(ゆうめい)な", "有名(ゆうめい)に", "有名(ゆうめい)だ"],
+        q: `彼はこの町の中で一番＿＿＿＿＿人です。`,
+        options: ["有名な", "有名に", "有名だ"],
         correct: 0
     },
     {
         q: `＿＿＿＿＿にごみをすててください。`,
-        options: ["友達(ともだち)", "家(いえ)", "ゴミ箱(ばこ)"],
+        options: ["友達", "家", "ゴミ箱"],
         correct: 2
     },
     {
         q: `<span class="speaker-a">A：</span>＿＿＿＿＿。\n<span class="speaker-b">B：</span>そうですね。`,
-        options: ["いい天気(てんき)ですね", "いい元気(げんき)ですね", "いい病気(びょうき)ですね"],
+        options: ["いい天気ですね", "いい元気ですね", "いい病気ですね"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>もしもし、アリさん、お元気(げんき)ですか? お久(ひさ)しぶりですね。\n<span class="speaker-b">B：</span>＿＿＿＿＿、元気(げんき)です。`,
-        options: ["おかげさまで", "久(ひさ)しぶりです", "おつかれさまです"],
+        q: `<span class="speaker-a">A：</span>もしもし、アリさん、お元気ですか? お久しぶりですね。\n<span class="speaker-b">B：</span>＿＿＿＿＿、元気です。`,
+        options: ["おかげさまで", "久しぶりです", "おつかれさまです"],
         correct: 0
     },
     {
-        q: `この食(た)べ物(もの)はエビがはいていますか?\nちょっと待(ま)って、あ、はいていますよ。\nアレルギーがあるので、エビを＿＿＿＿＿かゆくなります。`,
-        options: ["食(た)べない", "食(た)べる", "食(た)べて"],
+        q: `この食べ物はエビがはいていますか?\nちょっと待って、あ、はいていますよ。\nアレルギーがあるので、エビを＿＿＿＿＿かゆくなります。`,
+        options: ["食べない", "食べる", "食べて"],
         correct: 2
     },
     {
-        q: `すみません、ちょっといいですか?\nはい、なんですか?\nこの電車(でんしゃ)はさくら駅(えき)に＿＿＿＿＿。\nはい、そうです。`,
-        options: ["食(た)べますか?", "出(で)かけますか?", "行(い)きますか?"],
+        q: `すみません、ちょっといいですか?\nはい、なんですか?\nこの電車はさくら駅に＿＿＿＿＿。\nはい、そうです。`,
+        options: ["食べますか?", "出かけますか?", "行きますか?"],
         correct: 2
     },
     {
-        q: `どうしたんですか?\nさいふが＿＿＿＿＿こまってます。\nもう一回(いっかい)、さがしてみてください。`,
+        q: `どうしたんですか?\nさいふが＿＿＿＿＿こまってます。\nもう一回、さがしてみてください。`,
         options: ["なくします", "なくして", "なくなる"],
         correct: 1
     },
     {
-        q: `どのぐらい切(き)りますか?\n肩(かた)ぐらいまで切(き)って、まえがみが＿＿＿＿＿してください。`,
+        q: `どのぐらい切りますか?\n肩ぐらいまで切って、まえがみが＿＿＿＿＿してください。`,
         options: ["みじかく", "みじかい", "みじかいに"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>うちにはペットがいますか。\n<span class="speaker-b">B：</span>はい、うちにはたくさん＿＿＿＿＿。`,
-        options: ["ボトルがいます", "ペットがあります", "ペットがいます"],
+        q: `<span class="speaker-a">A：</span>うちにはぺットがいますか。\n<span class="speaker-b">B：</span>はい、うちにはたくさん＿＿＿＿＿。`,
+        options: ["ボトルがいます", "ぺットがあります", "ぺットがいます"],
         correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>すみません、コピー機(き)の使(つか)い方(かた)をおしえていただけませんか？\n<span class="speaker-b">B：</span>いいですよ。コピー機(き)を＿＿＿＿＿ことがありますか？\n<span class="speaker-a">A：</span>いいえ、ありません。\n<span class="speaker-b">B：</span>そうですか。じゃあ、せつめいしますね。`,
-        options: ["使(つか)った", "教(おし)えた", "持(も)った"],
+        q: `<span class="speaker-a">A：</span>すみません、コピー機の使い方をおしえていただけませんか？\n<span class="speaker-b">B：</span>いいですよ。コピー機を＿＿＿＿＿ことがありますか？\n<span class="speaker-a">A：</span>いいえ、ありません。\n<span class="speaker-b">B：</span>そうですか。じゃあ、せつめいしますね。`,
+        options: ["使った", "教えた", "持った"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>日本語(にほんご)はどうですか？\n<span class="speaker-b">B：</span>前(まえ)より、＿＿＿＿＿ようになりました。`,
-        options: ["話(はな)す", "話(はな)し", "話(はな)せる"],
+        q: `<span class="speaker-a">A：</span>日本語はどうですか？\n<span class="speaker-b">B：</span>前より、＿＿＿＿＿ようになりました。`,
+        options: ["話す", "話し", "話せる"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>＿＿＿＿＿。\n<span class="speaker-b">B：</span>お疲(つか)れさまでした。`,
+        q: `<span class="speaker-a">A：</span>＿＿＿＿＿。\n<span class="speaker-b">B：</span>お疲れさまでした。`,
         options: ["さきにしつれいします", "これからもよろしく", "おめでとうございます"],
         correct: 0
     },
@@ -365,7 +359,7 @@ const questionsData = [
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>イベントはどこで行(おこな)われますか？\n<span class="speaker-b">B：</span>広場(ひろば)でやります。\n<span class="speaker-a">A：</span>雨(あめ)の（ ）はどうしますか？\n<span class="speaker-b">B：</span>中止(ちゅうし)になります。`,
+        q: `<span class="speaker-a">A：</span>イベントはどこで行われますか？\n<span class="speaker-b">B：</span>広場でやります。\n<span class="speaker-a">A：</span>雨の（ ）はどうしますか？\n<span class="speaker-b">B：</span>中止になります。`,
         options: ["ところ", "ばあい", "はず"],
         correct: 1
     },
@@ -375,12 +369,12 @@ const questionsData = [
         correct: 0
     },
     {
-        q: `来月(らいげつ)からテニスを＿＿＿＿＿みようと思(おも)っています。`,
+        q: `来月からテニスを＿＿＿＿＿みようと思っています。`,
         options: ["はじめて", "はじめます", "はじめまして"],
         correct: 0
     },
     {
-        q: `かっこいいといいをもらって、＿＿＿＿＿。`,
+        q: `かっこいいと言ってをもらって、＿＿＿＿＿。`,
         options: ["さびしかったです", "うれしかったです", "にがてでした"],
         correct: 1
     },
@@ -395,37 +389,37 @@ const questionsData = [
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>もしもし、今(いま)どこですか?\n<span class="speaker-b">B：</span>今(いま)、郵便局(ゆうびんきょく)の前(まえ)に＿＿＿＿＿。`,
+        q: `<span class="speaker-a">A：</span>もしもし、今どこですか?\n<span class="speaker-b">B：</span>今、郵便局の前に＿＿＿＿＿。`,
         options: ["まちます", "あります", "います"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>もしもし、すみません、ちょっとおくれて、さいふが家(いえ)にわすれて＿＿＿＿＿。\n<span class="speaker-b">B：</span>はい、わかりました。`,
+        q: `<span class="speaker-a">A：</span>もしもし、すみません、ちょっとおくれて、さいふが家にわすれて＿＿＿＿＿。\n<span class="speaker-b">B：</span>はい、わかりました。`,
         options: ["しまいました", "おきました", "きました"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>会議室(かいぎしつ)の電気(でんき)がついたまま＿＿＿＿＿。\n<span class="speaker-b">B：</span>あ、すみません、忘(わす)れてしまいました。\n<span class="speaker-a">A：</span>＿＿＿＿＿。`,
-        options: ["こんどからはじめます", "明日(あした)けします", "こんどからきをつけます"],
+        q: `<span class="speaker-a">A：</span>会議室の電気がついたまま＿＿＿＿＿。\n<span class="speaker-b">B：</span>あ、すみません、忘れてしまいました。\n<span class="speaker-a">A：</span>＿＿＿＿＿。`,
+        options: ["こんどからはじめます", "明日けします", "こんどからきをつけます"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>アリさんは英語(えいご)が＿＿＿＿＿。\n<span class="speaker-b">B：</span>ええ、ちょっと出来(でき)ます。`,
-        options: ["出来(でき)ますか", "話(はな)せますか", "書(か)きますか"],
+        q: `<span class="speaker-a">A：</span>アリさんは英語が＿＿＿＿＿。\n<span class="speaker-b">B：</span>ええ、ちょっと出来ます。`,
+        options: ["出来ますか", "話せますか", "書きますか"],
         correct: 1
     },
     {
-        q: `エリカさん、仕事(しごと)はどうですか?\nさいきん、＿＿＿＿＿時間(じかん)がありません。`,
-        options: ["忙(いそが)しくて", "忙(いそが)しくなくて", "忙(いそが)しいで"],
+        q: `エリカさん、仕事はどうですか?\nさいきん、＿＿＿＿＿時間がありません。`,
+        options: ["忙しくて", "忙しくなくて", "忙しいで"],
         correct: 0
     },
     {
-        q: `日本(にほん)のじしんについてニュースを見(み)て＿＿＿＿＿。`,
-        options: ["びっくりします", "おどろきます", "勉強(べんきょう)します"],
+        q: `日本のじしんについてニュースを見て＿＿＿＿＿。`,
+        options: ["びっくりします", "おどろきます", "勉強します"],
         correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>＿＿＿＿＿しつれいします。\n<span class="speaker-b">B：</span>お疲(つか)れ様(さま)でした。`,
+        q: `<span class="speaker-a">A：</span>＿＿＿＿＿しつれいします。\n<span class="speaker-b">B：</span>お疲れ様でした。`,
         options: ["おせになりました", "いただきます", "ただいま"],
         correct: 0
     },
@@ -441,7 +435,7 @@ const questionsData = [
     },
     {
         q: `<span class="speaker-a">A：</span>どんなハンカチがほしいですか。\n<span class="speaker-b">B：</span>＿＿＿＿＿。`,
-        options: ["きれいハンカチです", "きれいなハンカチです", "きれいハンカチです"],
+        options: ["きれいハンカチです", "きれいなハンカチです", "きれいのハンカチです"],
         correct: 1
     },
     {
@@ -450,73 +444,63 @@ const questionsData = [
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>すみません まだ＿＿＿＿＿いません。今(いま)いすを並(なら)べています。\n<span class="speaker-b">B：</span>よろしくお願(ねが)いします。`,
-        options: ["終(お)わって", "始(はじ)めて", "話(はな)して"],
+        q: `<span class="speaker-a">A：</span>すみません まだ＿＿＿＿＿いません。今いすを並べています。\n<span class="speaker-b">B：</span>よろしくお願いします。`,
+        options: ["終わって", "始めて", "話して"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>あめが＿＿＿＿＿どうしますか。\n<span class="speaker-b">B：</span>雨(あめ)の日(ひ)に中止(ちゅうし)します。`,
-        options: ["降(ふ)ったら", "食(た)べたら", "行(い)ったら"],
+        q: `<span class="speaker-a">A：</span>あめが＿＿＿＿＿どうしますか。\n<span class="speaker-b">B：</span>雨の日に中止します。`,
+        options: ["降ったら", "食べたら", "行ったら"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>どうしたんですか?\n<span class="speaker-b">B：</span>＿＿＿＿＿。\n<span class="speaker-a">A：</span>何(なに)を食(た)べましたか?\n<span class="speaker-b">B：</span>辛(から)いラメンです。`,
-        options: ["頭(あたま)が痛(いた)いんです", "お腹(なか)が痛(いた)いんです", "体(からだ)が痛(いた)いんです"],
+        q: `<span class="speaker-a">A：</span>どうしたんですか?\n<span class="speaker-b">B：</span>＿＿＿＿＿。\n<span class="speaker-a">A：</span>何を食べましたか?\n<span class="speaker-b">B：</span>辛いラメンです。`,
+        options: ["頭が痛いんです", "お腹が痛いんです", "体が痛いんです"],
         correct: 1
     },
     {
-        q: `雨(あめ)がふったら、外(そと)のイベントは＿＿＿＿＿。`,
-        options: ["中止(ちゅうし)されます", "中止(ちゅうし)します", "中止(ちゅうし)させます"],
+        q: `雨がふったら、外のイベントは＿＿＿＿＿。`,
+        options: ["中止されます", "中止します", "中止させます"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>日本語(にほんご)はどうですか?\n<span class="speaker-b">B：</span>前(まえ)より、日本語(にほんご)が＿＿＿＿＿ようになりました。`,
-        options: ["話(はな)せる", "話(はな)す", "話(はな)しする"],
+        q: `<span class="speaker-a">A：</span>日本語はどうですか?\n<span class="speaker-b">B：</span>漢字の＿＿＿＿＿方が分かりません。`,
+        options: ["読み", "読む", "読んで"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>あ、アニサさん、ひさしぶりですね。\n<span class="speaker-b">B：</span>はい、ひさしぶりです。\n<span class="speaker-a">A：</span>どうぞ、上(あ)がってください。\n<span class="speaker-b">B：</span>はい、＿＿＿＿＿。`,
+        q: `<span class="speaker-a">A：</span>あ、アニサさん、ひさしぶりですね。\n<span class="speaker-b">B：</span>はい、ひさしぶりです。\n<span class="speaker-a">A：</span>どうぞ、上がってください。\n<span class="speaker-b">B：</span>はい、＿＿＿＿＿。`,
         options: ["ごめんください", "おねがいします", "おじゃまします"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>来月(らいげつ)どこかへ行(い)く予定(よてい)ですか?\n<span class="speaker-b">B：</span>そうですね。最近(さいきん)、仕事(しごと)が忙(いそが)しくて＿＿＿＿＿。`,
-        options: ["どこにもいきません", "どこでもいきません", "どこへもいきまんでした"],
+        q: `<span class="speaker-a">A：</span>来月どこかへ行く予定ですか?\n<span class="speaker-b">B：</span>そうですね。最近、仕事が忙しくて＿＿＿＿＿。`,
+        options: ["どこにもいきません", "どこでもいきません", "どこもいきまんでした"],
         correct: 0
     },
     {
-        q: `日本(にほん)のじしんについてニュースを見(み)て＿＿＿＿＿。`, // Duplikat dibersihkan
-        options: ["びっくりします", "おどろきます", "勉強(べんきょう)します"],
-        correct: 1
-    },
-    {
-        q: `ケーキ、もう一(ひと)ついかがですか？\nけっこうです。もう＿＿＿＿＿。`,
+        q: `ケーキ、もう一ついかがですか？\nけっこうです。もう＿＿＿＿＿。`,
         options: ["すこしいです", "いっぱいです", "いっかいです"],
+        correct: 1 
+    },
+    {
+        q: `<span class="speaker-a">A：</span>しゅみはなんですか?\n<span class="speaker-b">B：</span>わたしのしゅみは本を＿＿＿＿＿ことです。`,
+        options: ["見る", "読む", "書く"],
         correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>しつれいします。\n<span class="speaker-b">B：</span>お疲(つか)れ様(さま)でした。\n<span class="speaker-a">A：</span>＿＿＿＿＿。`,
-        options: ["おせわになりました", "いただきます", "ただいま"],
-        correct: 0
-    },
-    {
-        q: `<span class="speaker-a">A：</span>しゅみはなんですか?\n<span class="speaker-b">B：</span>わたしのしゅみは本(ほん)を＿＿＿＿＿ことです。`,
-        options: ["見(み)る", "読(よ)む", "書(か)く"],
-        correct: 1
-    },
-    {
-        q: `<span class="speaker-a">A：</span>女(おんな)の人(ひと)：＿＿＿＿＿。\n<span class="speaker-b">B：</span>男(おとこ)の人(ひと)：いいえ、大丈夫(だいじょうぶ)です。`,
+        q: `<span class="speaker-a">A：</span>女の人：＿＿＿＿＿。\n<span class="speaker-b">B：</span>男の人：いいえ、大丈夫です。`,
         options: ["かまいません", "しつれいします", "すみません"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>このまちは＿＿＿＿＿。\n<span class="speaker-b">B：</span>そうですね。それに人(ひと)も親切(しんせつ)です。`,
-        options: ["遠(とお)い", "不便(ふべん)", "少(すく)ない", "大(おお)きい"],
+        q: `<span class="speaker-a">A：</span>このまちは＿＿＿＿＿。\n<span class="speaker-b">B：</span>そうですね。それに人も親切です。`,
+        options: ["遠い", "不便", "少ない", "大きい"],
         correct: 3
     },
     {
-        q: `<span class="speaker-a">A：</span>食(た)べ物(もの)はどうですか。\n<span class="speaker-b">B：</span>やっぱり、＿＿＿＿＿。`,
-        options: ["おいしかった", "楽(たの)しかった", "軽(かる)かった"],
+        q: `<span class="speaker-a">A：</span>食べ物はどうですか。\n<span class="speaker-b">B：</span>やっぱり、＿＿＿＿＿。`,
+        options: ["おいしかった", "楽しかった", "軽かった"],
         correct: 0
     },
     {
@@ -525,67 +509,67 @@ const questionsData = [
         correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>にもつが重(おも)そうですね。\n<span class="speaker-b">B：</span>ありがとうございます。＿＿＿＿＿。`,
+        q: `<span class="speaker-a">A：</span>にもつが重そうですね。\n<span class="speaker-b">B：</span>ありがとうございます。＿＿＿＿＿。`,
         options: ["てつだいませんか?", "てつだいましょうか?", "てつだいますか?"],
         correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>日曜日(にちようび)にさくら公園(こうえん)にお祭(まつ)りがあります。いっしょにいきませんか?\n<span class="speaker-b">B：</span>それはいいですね。じゃあ、＿＿＿＿＿。`,
-        options: ["行(い)きません", "行(い)きましょう", "行(い)きます"],
+        q: `<span class="speaker-a">A：</span>日曜日にさくら公園にお祭りがあります。いっしょにいきませんか?\n<span class="speaker-b">B：</span>それはいいですね。じゃあ、＿＿＿＿＿。`,
+        options: ["行きません", "行きましょう", "行きます"],
         correct: 1
     },
     {
-        q: `会議(かいぎ)はもう始(はじ)まったんですね。入(はい)ることはもう＿＿＿＿＿。`,
+        q: `会議はもう始まったんですね。入ることはもう＿＿＿＿＿。`,
         options: ["ちょっとですか？", "いちどですか？", "むりですか", "そうですか？"],
         correct: 2
     },
     {
-        q: `かばんが大(おお)きい、でも＿＿＿＿＿です。`,
-        options: ["重(おも)い", "軽(かる)い", "強(つよ)い", "安(やす)い"],
+        q: `かばんが大きい、でも＿＿＿＿＿です。`,
+        options: ["重い", "軽い", "強い", "安い"],
         correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>リターさん、昼(ひる)ご飯(はん)いっしょに＿＿＿＿＿。\n<span class="speaker-b">B：</span>そう、しましょう。`,
-        options: ["のみませんか？", "たべませんでしたか？", "たべませんか？"],
+        q: `<span class="speaker-a">A：</span>リターさん、昼ご飯いっしょに＿＿＿＿＿。\n<span class="speaker-b">B：</span>そう、しましょう。`,
+        options: ["たべましたか？", "たべませんでしたか？", "たべませんか？"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>昨日(きのう)コピー機(き)のスイッチは入(はい)ったままでした。\n<span class="speaker-b">B：</span>昨日(きのう)はわすれてしまいました。\n<span class="speaker-a">A：</span>つぎは＿＿＿＿＿きってくださいね。`,
-        options: ["かならず", "できれば", "たしかんに"],
+        q: `<span class="speaker-a">A：</span>昨日コピー機のスイッチは入ったままでした。\n<span class="speaker-b">B：</span>昨日はわすれてしまいました。\n<span class="speaker-a">A：</span>つぎは＿＿＿＿＿きってくださいね。`,
+        options: ["かならず", "できれば", "ときどき"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>すみません、ジュースをお願(ねが)いします。\n<span class="speaker-b">B：</span>はい、かしこまりました。\n<span class="speaker-a">A：</span>なかなかこないんですね。\n<span class="speaker-b">B：</span>すみません。＿＿＿＿＿。`,
-        options: ["わすれてしまいました", "わかりました。", "お待(ま)たせしました"],
+        q: `<span class="speaker-a">A：</span>すみません、ジュースをお願いします。\n<span class="speaker-b">B：</span>はい、かしこまりました。\n<span class="speaker-a">A：</span>なかなかこないんですね。\n<span class="speaker-b">B：</span>すみません。＿＿＿＿＿。`,
+        options: ["わすれてしまいました", "わかりました。", "お待たせしました"],
         correct: 2
     },
     {
-        q: `このコピー＿＿＿＿＿いいですか。`,
-        options: ["遊(あそ)んでも", "使(つか)っても", "飲(の)んでも"],
+        q: `このコピー機＿＿＿＿＿いいですか。`,
+        options: ["遊んでも", "使っても", "飲んでも"],
         correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>日本語(にほんご)上手(じょうず)ですね。どうやって日本語(にほんご)勉強(べんきょう)しましたか？\n<span class="speaker-b">B：</span>そうですね。アニメをみます。\n<span class="speaker-a">A：</span>すごいですね。\n<span class="speaker-b">B：</span>いいえ、＿＿＿＿＿。`,
+        q: `<span class="speaker-a">A：</span>日本語上手ですね。どうやって日本語勉強しましたか？\n<span class="speaker-b">B：</span>そうですね。アニメをみます。\n<span class="speaker-a">A：</span>すごいですね。\n<span class="speaker-b">B：</span>いいえ、＿＿＿＿＿。`,
         options: ["もちろんです", "じょうずですよ", "まだまだです"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>リターさん、れんきゅうはどこへ行(い)くんですか。\n<span class="speaker-b">B：</span>連休(れんきゅう)は国(くに)の友達(ともだち)が来(く)るつもりですから、＿＿＿＿＿。\n<span class="speaker-a">A：</span>そうなんですか？`,
-        options: ["どこにも行(い)かない", "だれもいかない", "どこへいかない"],
+        q: `<span class="speaker-a">A：</span>リターさん、れんきゅうはどこへ行くんですか。\n<span class="speaker-b">B：</span>連休は国の友達が来るつもりですから、＿＿＿＿＿。\n<span class="speaker-a">A：</span>そうなんですか？`,
+        options: ["どこにも行かない", "どこでもいかない", "どこへいかない"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>私(わたし)の家(いえ)はこじま高校(こうこう)のちかくです。\n<span class="speaker-b">B：</span>もうすこしこじま高校(こうこう)だけど。\n<span class="speaker-a">A：</span>次(つぎ)のは信号(しんごう)は右(みぎ)に曲(ま)がってください。\n<span class="speaker-b">B：</span>ああ……、ここ？じゃあ、お疲(つか)れさまでした。おやすみなさい。＿＿＿＿＿。`,
+        q: `<span class="speaker-a">A：</span>私の家はこじま高校のちかくです。\n<span class="speaker-b">B：</span>もうすこしこじま高校だけど。\n<span class="speaker-a">A：</span>次のは信号は右に曲がってください。\n<span class="speaker-b">B：</span>ああ……、ここ？じゃあ、お疲れさまでした。おやすみなさい。＿＿＿＿＿。`,
         options: ["ここでいいです", "こちらこそ", "ありがとうございます", "すみません"],
         correct: 0
     },
     {
-        q: `好(す)きな＿＿＿＿＿は春(はる)です。`,
+        q: `好きな＿＿＿＿＿は春です。`,
         options: ["きせき", "きせつ", "きょうしつ", "きさつ"],
         correct: 1
     },
     {
-        q: `<span class="speaker-a">A：</span>こちらは私(わたし)の妻(つま)です。\n<span class="speaker-b">妻(つま)：</span>どうぞよろしくお願(ねが)いします。\n<span class="speaker-a">B：</span>よろしく＿＿＿＿＿。`,
+        q: `<span class="speaker-a">A：</span>こちらは私の妻です。\n<span class="speaker-b">妻：</span>どうぞよろしくお願いします。\n<span class="speaker-a">B：</span>＿＿＿＿＿よろしく。`,
         options: ["わたしから", "ありがとうございます", "こちらこそ"],
         correct: 2
     },
@@ -595,48 +579,48 @@ const questionsData = [
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>どこに行(い)きたいですか?\n<span class="speaker-b">B：</span>山(やま)に＿＿＿＿＿。`,
-        options: ["遊(あそ)びます", "泳(およ)ぎます", "登(のぼ)ります", "上(あ)がります"],
+        q: `<span class="speaker-a">A：</span>どこに行くんですか?\n<span class="speaker-b">B：</span>山に＿＿＿＿＿。`,
+        options: ["遊びます", "泳ぎます", "登ります", "上がります"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>もしもし。アニサーさん。\n<span class="speaker-b">B：</span>ああ、アリさん、いま、＿＿＿＿＿。\n<span class="speaker-a">A：</span>駅(えき)にいます。すみません、時間(じかん)がまちがえて１５分(ふん)ぐらいおくれます。`,
+        q: `<span class="speaker-a">A：</span>もしもし。アニサーさん。\n<span class="speaker-b">B：</span>ああ、アリさん、いま、＿＿＿＿＿。\n<span class="speaker-a">A：</span>駅にいます。すみません、時間がまちがえて１５分ぐらいおくれます。`,
         options: ["どこですか？", "だれですか？", "どうですか？"],
         correct: 0
     },
     {
-        q: `<span class="speaker-a">A：</span>仕事(しごと)は＿＿＿＿＿？\n<span class="speaker-b">B：</span>楽(たの)しいです。`,
+        q: `<span class="speaker-a">A：</span>仕事は＿＿＿＿＿？\n<span class="speaker-b">B：</span>楽しいです。`,
         options: ["げんきですか", "いいですか", "どうですか"],
         correct: 2
     },
     {
-        q: `<span class="speaker-a">A：</span>＿＿＿＿＿。\n<span class="speaker-b">B：</span>はい。\n<span class="speaker-a">A：</span>熱(ねつ)があるので、やすんでもいいですか？\n<span class="speaker-b">B：</span>はい。`,
+        q: `<span class="speaker-a">A：</span>＿＿＿＿＿。\n<span class="speaker-b">B：</span>はい。\n<span class="speaker-a">A：</span>熱があるので、やすんでもいいですか？\n<span class="speaker-b">B：</span>はい。`,
         options: ["ちょっとまって", "いいですか", "ちょっといいでしょうか"],
         correct: 2
     },
     {
-        q: `さかなやかいが＿＿＿＿＿、おいしいですね。`, // Typo "かい" di PDF dipertahankan
+        q: `さかなやかいが＿＿＿＿＿、おいしいですね。`,
         options: ["うつくしくて", "しんせんで", "まずくて"],
         correct: 1
     },
     {
-        q: `わたしは１１じから７じまで＿＿＿＿＿。`,
+        q: `私は１１じから７じまで＿＿＿＿＿。`,
         options: ["あびます", "ねます", "のぼります"],
         correct: 1
     },
     {
-        q: `ご飯(はん)を食(た)べながら、テレビを＿＿＿＿＿。`,
-        options: ["見(み)えます", "見(み)ません", "見(み)ます"],
+        q: `ご飯を＿＿＿＿＿ながら、テレビを見ます。`,
+        options: ["食べる", "食べて", "食べ"],
         correct: 2
     },
     {
-        q: `カラオケ大会(たいかい)の参加(さんか)したい人(ひと)は、お金(かね)を＿＿＿＿＿ください。`,
-        options: ["はらって", "はしって", "わたして"],
+        q: `カラオケ大会の参加したい人は、お金を＿＿＿＿＿ください。`,
+        options: ["はらって", "くれて", "もらって"],
         correct: 0
     },
     {
-        q: `からだのために＿＿＿＿＿運動(うんどう)したりします。`,
-        options: ["歩(ある)くて", "歩(ある)きます", "歩(ある)いたり"],
+        q: `からだのために＿＿＿＿＿運動したりします。`,
+        options: ["歩くて", "歩きます", "歩いたり"],
         correct: 2
     }
 ];
@@ -648,7 +632,7 @@ let currentIndex = 0;
 let userName = "";
 let userClass = "";
 let timerInterval = null;
-let timeLeft = 45 * 60;
+let timeLeft = 45 * 60; // 45 Menit
 
 // ==================== FUNGSI ACAK ====================
 function shuffleArray(arr) {
@@ -720,7 +704,7 @@ function updateTimerDisplay() {
     const seconds = timeLeft % 60;
     const display = document.getElementById('timerDisplay');
     display.textContent = `⏱ ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    if (timeLeft <= 450) {
+    if (timeLeft <= 300) {
         display.classList.add('warning');
     } else {
         display.classList.remove('warning');
